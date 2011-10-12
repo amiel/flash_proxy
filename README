@@ -1,0 +1,1 @@
+A simple rack proxy to intercept flash upload requests in order to log the request and response.
