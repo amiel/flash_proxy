@@ -19,15 +19,27 @@ class FlashProxy < Rack::Proxy
 
   def call(env)
     if '/crossdomain.xml' == env["PATH_INFO"]
-      [
-        200,
-        { 'Content-Type' => 'text/xml' },
-        [%q(<?xml version="1.0"?><!DOCTYPE cross-domain-policy SYSTEM "http://www.adobe.com/xml/dtds/cross-domain-policy.dtd"><cross-domain-policy><allow-access-from domain="*" secure="false" /></cross-domain-policy>)]
-      ]
+      crossdomain
     else
       super
     end
   end
+
+
+
+  def crossdomain
+    xml = <<-XML.gsub(/^ {6}/, '')
+      <?xml version="1.0"?>
+      <!DOCTYPE cross-domain-policy SYSTEM
+      "http://www.macromedia.com/xml/dtds/cross-domain-policy.dtd">
+      <cross-domain-policy>
+        <allow-access-from domain="*" secure="false" />
+      </cross-domain-policy>
+    XML
+
+    [200, { 'Content-Type' => 'text/xml' }, xml.lines]
+  end
+
 
   def rewrite_env(env)
     log_request("pre env", env)

@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/amiel/request_logger.git
+  revision: 9994b73b9e95eb2d36c1b14a927d528adc5308fe
+  specs:
+    request_logger (0.0.1)
+      rack
+
 PATH
   remote: ../github/rack-proxy
   specs:
@@ -28,3 +35,4 @@ DEPENDENCIES
   pry
   rack
   rack-proxy!
+  request_logger!
